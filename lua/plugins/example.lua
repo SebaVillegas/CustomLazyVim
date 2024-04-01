@@ -17,21 +17,12 @@ return {
         opts = { use_diagnostic_signs = true },
     },
     {
-      "numToStr/Comment.nvim",
-      lazy = false
+        "numToStr/Comment.nvim",
+        lazy = false,
     },
     -- disable trouble
     { "folke/trouble.nvim", enabled = true },
 
-    -- override nvim-cmp and add cmp-emoji
-    {
-        "hrsh7th/nvim-cmp",
-        dependencies = { "hrsh7th/cmp-emoji" },
-        ---@param opts cmp.ConfigSchema
-        opts = function(_, opts)
-            table.insert(opts.sources, { name = "emoji" })
-        end,
-    },
     -- use mini.starter instead of alpha
     { import = "lazyvim.plugins.extras.ui.mini-starter" },
 
@@ -39,7 +30,7 @@ return {
     { import = "lazyvim.plugins.extras.lang.json" },
 
     -- add any tools you want to have installed below
-    
+
     -- Use <tab> for completion and snippets (supertab)
     -- first: disable default <tab> and <s-tab> behavior in LuaSnip
     {
@@ -59,7 +50,12 @@ return {
             local has_words_before = function()
                 unpack = unpack or table.unpack
                 local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-                return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+                return col ~= 0
+                    and vim.api
+                            .nvim_buf_get_lines(0, line - 1, line, true)[1]
+                            :sub(col, col)
+                            :match("%s")
+                        == nil
             end
 
             local luasnip = require("luasnip")
